@@ -27,16 +27,16 @@ public abstract class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
+
 	@CPF
 	@Column(unique = true)
 	private String cpf;
-	
+
 	@Column(unique = true)
 	private String email;
 	private String senha;
 	private LocalDateTime dataCriacao;
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
