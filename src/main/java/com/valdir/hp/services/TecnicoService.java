@@ -36,4 +36,13 @@ public class TecnicoService {
 		return repository.save(old);
 	}
 
+	public void delete(Integer id) {
+		Tecnico obj = findById(id);
+		
+		if(obj.getChamados().size() > 0) {
+			throw new RuntimeException("Técnico possui chamados associados e não pode ser deletado");
+		} else {
+			repository.deleteById(id);
+		}
+	}
 }
