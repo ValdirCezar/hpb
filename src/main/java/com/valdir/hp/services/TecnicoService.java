@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.valdir.hp.dtos.TecnicoDTO;
 import com.valdir.hp.model.Tecnico;
 import com.valdir.hp.repositories.TecnicoRepository;
+import com.valdir.hp.services.exceptions.DataIntegrityViolationException;
 import com.valdir.hp.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -42,7 +43,8 @@ public class TecnicoService {
 		Tecnico obj = findById(id);
 
 		if (obj.getChamados().size() > 0) {
-			throw new RuntimeException("Técnico possui chamados associados e não pode ser deletado");
+			throw new DataIntegrityViolationException(
+					"Técnico " + obj.getNome() + " possui chamados associados e não pode ser deletado! Id: " + id);
 		} else {
 			repository.deleteById(id);
 		}
