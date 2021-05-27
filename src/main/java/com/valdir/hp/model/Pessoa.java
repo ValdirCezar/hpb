@@ -1,20 +1,43 @@
 package com.valdir.hp.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.valdir.hp.enums.Perfil;
 
+@Entity
 public abstract class Pessoa {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@CPF
+	@Column(unique = true)
 	private String cpf;
+	
+	@Column(unique = true)
 	private String email;
 	private String senha;
 	private LocalDate dataCriacao;
-	private Set<Integer> perfis;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 
 	public Pessoa() {
 		super();
