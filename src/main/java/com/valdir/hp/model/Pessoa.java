@@ -1,6 +1,7 @@
 package com.valdir.hp.model;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +20,8 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.valdir.hp.enums.Perfil;
 
 @Entity
-public abstract class Pessoa {
+public abstract class Pessoa implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,7 @@ public abstract class Pessoa {
 	@Column(unique = true)
 	private String email;
 	private String senha;
-	private LocalDate dataCriacao;
+	private LocalDateTime dataCriacao;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
@@ -41,18 +43,18 @@ public abstract class Pessoa {
 
 	public Pessoa() {
 		super();
-		this.dataCriacao = LocalDate.now();
+		this.dataCriacao = LocalDateTime.now();
 		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
-	public Pessoa(Integer id, String nome, String cpf, String email, String senha, LocalDate dataCriacao) {
+	public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
-		this.dataCriacao = LocalDate.now();
+		this.dataCriacao = LocalDateTime.now();
 		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
@@ -96,11 +98,11 @@ public abstract class Pessoa {
 		this.senha = senha;
 	}
 
-	public LocalDate getDataCriacao() {
+	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDate dataCriacao) {
+	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

@@ -1,20 +1,19 @@
 package com.valdir.hp.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
 @Entity
-public class Cliente extends Pessoa implements Serializable{
+public class Cliente extends Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Cliente() {
 		super();
 	}
 
-	public Cliente(Integer id, String nome, String cpf, String email, String senha, LocalDate dataCriacao) {
-		super(id, nome, cpf, email, senha, dataCriacao);
+	public Cliente(Integer id, String nome, String cpf, String email, String senha) {
+		super(id, nome, cpf, email, senha);
 	}
-	
+
 }
