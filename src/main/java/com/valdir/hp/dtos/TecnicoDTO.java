@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.valdir.hp.enums.Perfil;
 import com.valdir.hp.model.Tecnico;
 
@@ -24,6 +25,8 @@ public class TecnicoDTO implements Serializable {
 
 	@Email
 	private String email;
+	
+	@JsonIgnore
 	private String senha;
 	private LocalDateTime dataCriacao;
 	private Set<Integer> perfis = new HashSet<>();
