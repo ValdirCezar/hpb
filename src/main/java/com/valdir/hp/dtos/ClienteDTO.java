@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -17,14 +18,21 @@ public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotEmpty(message = "Campo NOME é requerido")
 	private String nome;
 
-	@CPF
+	@CPF	
+	@NotEmpty(message = "Campo CPF é requerido")
 	private String cpf;
 
 	@Email
+	@NotEmpty(message = "Campo E-MAIL é requerido")
 	private String email;
+	
+	@NotEmpty(message = "Campo SENHA é requerido")
 	private String senha;
+	
 	private LocalDateTime dataCriacao;
 	private Set<Integer> perfis = new HashSet<>();
 

@@ -23,25 +23,23 @@ public abstract class Pessoa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String nome;
+	protected Integer id;
+	protected String nome;
 
 	@Column(unique = true)
-	private String cpf;
+	protected String cpf;
 
 	@Column(unique = true)
-	private String email;
-	private String senha;
-	private LocalDateTime dataCriacao;
+	protected String email;
+	protected String senha;
+	protected LocalDateTime dataCriacao = LocalDateTime.now();
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "PERFIS")
-	private Set<Integer> perfis = new HashSet<>();
+	protected Set<Integer> perfis = new HashSet<>();
 
 	public Pessoa() {
 		super();
-		this.dataCriacao = LocalDateTime.now();
-		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
 	public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
@@ -51,8 +49,6 @@ public abstract class Pessoa implements Serializable {
 		this.cpf = cpf;
 		this.email = email;
 		this.senha = senha;
-		this.dataCriacao = LocalDateTime.now();
-		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
 	public Integer getId() {

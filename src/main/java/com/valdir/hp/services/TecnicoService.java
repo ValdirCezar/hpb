@@ -1,10 +1,12 @@
 package com.valdir.hp.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.valdir.hp.dtos.TecnicoDTO;
 import com.valdir.hp.model.Tecnico;
 import com.valdir.hp.repositories.TecnicoRepository;
 
@@ -17,6 +19,21 @@ public class TecnicoService {
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
 		return obj.orElse(null);
+	}
+	
+	public List<Tecnico> findAll() {
+		return repository.findAll();
+	}
+	
+	public Tecnico create(TecnicoDTO objDTO) {
+		return repository.save(new Tecnico(objDTO));
+	}
+
+	public Tecnico update(Integer id, TecnicoDTO objDTO) {
+		objDTO.setId(id);
+		Tecnico old = findById(id);
+		old = new Tecnico(objDTO);
+		return repository.save(old);
 	}
 
 }
