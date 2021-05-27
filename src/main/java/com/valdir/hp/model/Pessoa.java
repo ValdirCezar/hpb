@@ -1,6 +1,10 @@
 package com.valdir.hp.model;
 
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.valdir.hp.enums.Perfil;
 
 public abstract class Pessoa {
 
@@ -10,10 +14,12 @@ public abstract class Pessoa {
 	private String email;
 	private String senha;
 	private LocalDate dataCriacao;
+	private Set<Integer> perfis;
 
 	public Pessoa() {
 		super();
 		this.dataCriacao = LocalDate.now();
+		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
 	public Pessoa(Integer id, String nome, String cpf, String email, String senha, LocalDate dataCriacao) {
@@ -24,6 +30,7 @@ public abstract class Pessoa {
 		this.email = email;
 		this.senha = senha;
 		this.dataCriacao = LocalDate.now();
+		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
 	public Integer getId() {
@@ -72,6 +79,14 @@ public abstract class Pessoa {
 
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
+	}
+
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		this.perfis.add(perfil.getCod());
 	}
 
 	@Override
