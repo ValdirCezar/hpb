@@ -1,18 +1,33 @@
 package com.valdir.hp.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.hp.enums.Prioridade;
 import com.valdir.hp.enums.Status;
 
-public class Chamado {
+@Entity
+public class Chamado implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataAbertura;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
+	
 	private Prioridade prioridade;
 	private Status status;
 	private String titulo;
@@ -21,7 +36,7 @@ public class Chamado {
 	@ManyToOne
 	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -29,6 +44,8 @@ public class Chamado {
 	public Chamado() {
 		super();
 		this.dataAbertura = LocalDate.now();
+		this.prioridade = Prioridade.BAIXA;
+		this.status = Status.ABERTO;
 	}
 
 	public Chamado(Integer id, LocalDate dataAbertura, Prioridade prioridade, Status status, String titulo,
