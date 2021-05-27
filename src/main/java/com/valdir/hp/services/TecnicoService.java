@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.valdir.hp.dtos.TecnicoDTO;
 import com.valdir.hp.model.Tecnico;
 import com.valdir.hp.repositories.TecnicoRepository;
+import com.valdir.hp.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TecnicoService {
@@ -18,13 +19,14 @@ public class TecnicoService {
 
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo " + Tecnico.class.getSimpleName()));
 	}
-	
+
 	public List<Tecnico> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public Tecnico create(TecnicoDTO objDTO) {
 		return repository.save(new Tecnico(objDTO));
 	}
@@ -38,8 +40,8 @@ public class TecnicoService {
 
 	public void delete(Integer id) {
 		Tecnico obj = findById(id);
-		
-		if(obj.getChamados().size() > 0) {
+
+		if (obj.getChamados().size() > 0) {
 			throw new RuntimeException("Técnico possui chamados associados e não pode ser deletado");
 		} else {
 			repository.deleteById(id);
