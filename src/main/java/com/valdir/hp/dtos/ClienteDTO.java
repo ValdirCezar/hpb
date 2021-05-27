@@ -11,9 +11,9 @@ import javax.validation.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.valdir.hp.enums.Perfil;
-import com.valdir.hp.model.Tecnico;
+import com.valdir.hp.model.Cliente;
 
-public class TecnicoDTO implements Serializable {
+public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -28,11 +28,11 @@ public class TecnicoDTO implements Serializable {
 	private LocalDateTime dataCriacao;
 	private Set<Integer> perfis = new HashSet<>();
 
-	public TecnicoDTO() {
+	public ClienteDTO() {
 		super();
 	}
 
-	public TecnicoDTO(Tecnico obj) {
+	public ClienteDTO(Cliente obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
