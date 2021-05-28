@@ -33,7 +33,8 @@ public class ClienteDTO implements Serializable {
 	@NotEmpty(message = "Campo SENHA é requerido")
 	private String senha;
 	
-	private LocalDateTime dataCriacao;
+	private LocalDateTime dataCriacao = LocalDateTime.now();
+	
 	private Set<Integer> perfis = new HashSet<>();
 
 	public ClienteDTO() {

@@ -34,6 +34,7 @@ public class TecnicoDTO implements Serializable {
 	private String senha;
 
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	
 	private Set<Integer> perfis = new HashSet<>();
 
 	public TecnicoDTO() {

@@ -22,10 +22,12 @@ public class Cliente extends Pessoa implements Serializable {
 
 	public Cliente() {
 		super();
+		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 
 	public Cliente(Integer id, String nome, String cpf, String email, String senha) {
 		super(id, nome, cpf, email, senha);
+		addPerfil(Perfil.ROLE_CLIENTE);
 	}
 	
 	public Cliente(ClienteDTO obj) {
