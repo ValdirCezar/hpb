@@ -29,32 +29,62 @@ public class TecnicoResource {
 	@Autowired
 	private TecnicoService service;
 
+	/**
+	 * Busca um Tecnico por ID
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id) {
 		Tecnico obj = service.findById(id);
 		return ResponseEntity.ok().body(new TecnicoDTO(obj));
 	}
-	
+
+	/**
+	 * Lista todos os Tecnicos do banco
+	 * 
+	 * @return
+	 */
 	@GetMapping
 	public ResponseEntity<List<TecnicoDTO>> findAll() {
 		List<Tecnico> list = service.findAll();
 		List<TecnicoDTO> listDTO = list.stream().map(obj -> new TecnicoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
+
+	/**
+	 * Cria um novo Tecnico
+	 * 
+	 * @param objDTO
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO) {
 		Tecnico obj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(new TecnicoDTO(obj));
 	}
-	
+
+	/**
+	 * Atualiza as informações de um Tecnico
+	 * 
+	 * @param id
+	 * @param objDTO
+	 * @return
+	 */
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @RequestBody TecnicoDTO objDTO) {
 		Tecnico obj = service.update(id, objDTO);
 		return ResponseEntity.ok().body(new TecnicoDTO(obj));
 	}
-	
+
+	/**
+	 * Deleta um Tecnico
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
@@ -62,11 +92,3 @@ public class TecnicoResource {
 	}
 
 }
-
-
-
-
-
-
-
-

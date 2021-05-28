@@ -19,41 +19,62 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository repository;
-	
+
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
+	/**
+	 * Busca um Tecnico por ID
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo " + Tecnico.class.getSimpleName()));
 	}
 
+	/**
+	 * Lista todos os Tecnicos do banco
+	 * 
+	 * @return
+	 */
 	public List<Tecnico> findAll() {
 		return repository.findAll();
 	}
 
+	/**
+	 * Cria um novo Tecnico
+	 * 
+	 * @param objDTO
+	 * @return
+	 */
 	public Tecnico create(TecnicoDTO objDTO) {
-		
-		if(findByCpf(objDTO.getCpf()) != null) {
-			throw new DataIntegrityViolationException("CPF " + objDTO.getCpf() + " já cadastrado no sistema!");
-		}
-		
-		if(findByEmail(objDTO.getEmail()) != null) {
-			throw new DataIntegrityViolationException("E-mail " + objDTO.getEmail() + " já cadastrado no sistema!");
-		}
-		
+		validaPorCpfEmail(objDTO);
 		return repository.save(new Tecnico(objDTO));
 	}
 
+	/**
+	 * Atualiza as informações de um Tecnico
+	 * 
+	 * @param id
+	 * @param objDTO
+	 * @return
+	 */
 	public Tecnico update(Integer id, TecnicoDTO objDTO) {
 		objDTO.setId(id);
 		Tecnico old = findById(id);
-		validaUpdate(objDTO);
+		validaPorCpfEmail(objDTO);
 		old = new Tecnico(objDTO);
 		return repository.save(old);
 	}
 
+	/**
+	 * Deleta um Tecnico
+	 * 
+	 * @param id
+	 */
 	public void delete(Integer id) {
 		Tecnico obj = findById(id);
 
@@ -64,24 +85,42 @@ public class TecnicoService {
 			repository.deleteById(id);
 		}
 	}
-	
+
+	/**
+	 * Busca Tecnico por CPF
+	 * 
+	 * @param cpf
+	 * @return
+	 */
 	public Optional<Pessoa> findByCpf(String cpf) {
 		Optional<Pessoa> obj = pessoaRepository.findByCpf(cpf);
 		return obj.isPresent() ? obj : null;
 	}
-	
+
+	/**
+	 * Busca Tecnico por E-mail
+	 * 
+	 * @param email
+	 * @return
+	 */
 	public Optional<Pessoa> findByEmail(String email) {
 		Optional<Pessoa> obj = pessoaRepository.findByEmail(email);
 		return obj.isPresent() ? obj : null;
 	}
-	
-	private void validaUpdate(TecnicoDTO objDTO) {
+
+	/**
+	 * Valida se existe Alguma pessoa cadastrada no banco com o CPF ou E-mail
+	 * passado como parametro
+	 * 
+	 * @param objDTO
+	 */
+	private void validaPorCpfEmail(TecnicoDTO objDTO) {
 		Optional<Pessoa> obj = pessoaRepository.findByCpf(objDTO.getCpf());
-		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) 
+		if (obj.isPresent() && obj.get().getId() != objDTO.getId())
 			throw new DataIntegrityViolationException("CPF " + objDTO.getCpf() + " já cadastrado no sistema!");
-		
+
 		obj = pessoaRepository.findByEmail(objDTO.getEmail());
-		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) 
+		if (obj.isPresent() && obj.get().getId() != objDTO.getId())
 			throw new DataIntegrityViolationException("E-mail " + objDTO.getEmail() + " já cadastrado no sistema!");
 	}
 }
