@@ -64,6 +64,12 @@ public class ChamadoResource {
 		return ResponseEntity.created(uri).body(new ChamadoDTO(newObj));
 	}
 	
+	/**
+	 * Atualiza Chamado
+	 * @param id
+	 * @param objDTO
+	 * @return
+	 */
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id, @Valid @RequestBody ChamadoDTO objDTO) {
 		Chamado obj = service.update(id, objDTO);
