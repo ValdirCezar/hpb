@@ -3,6 +3,8 @@ package com.valdir.hp.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.hp.model.Chamado;
 
@@ -16,11 +18,17 @@ public class ChamadoDTO implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
 
+	@NotNull(message = "Campo PRIORIDADE é requerido")
 	private Integer prioridade;
+	@NotNull(message = "Campo STATUS é requerido")
 	private Integer status;
+	@NotNull(message = "Campo TITULO é requerido")
 	private String titulo;
+	@NotNull(message = "Campo DESCRIÇÃO é requerido")
 	private String descricao;
+	@NotNull(message = "Campo TECNICO é requerido")
 	private Integer tecnico;
+	@NotNull(message = "Campo CLIENTE é requerido")
 	private Integer cliente;
 
 	public ChamadoDTO() {
