@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.valdir.hp.dtos.TecnicoDTO;
@@ -22,6 +23,9 @@ public class TecnicoService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	/**
 	 * Busca um Tecnico por ID
@@ -51,6 +55,7 @@ public class TecnicoService {
 	 * @return
 	 */
 	public Tecnico create(TecnicoDTO objDTO) {
+		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
 		validaPorCpfEmail(objDTO);
 		return repository.save(new Tecnico(objDTO));
 	}
