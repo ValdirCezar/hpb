@@ -1,6 +1,5 @@
 package com.valdir.hp.config;
 
-import java.net.http.HttpRequest;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,37 +20,35 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
-	
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
+
 	@Autowired
 	private Environment env;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		
+
 		http.cors();
 		http.csrf().disable();
-		
-		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
-			.anyRequest().authenticated();
-		
+
+		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
+
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
-	
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
@@ -60,10 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	
+
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 }
