@@ -103,6 +103,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String username = ((UserSS) authResult.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
+		response.addHeader("access-control-expose-headers", "Authorization");
 		response.addHeader("Authorization", "Bearer " + token);
 	}
 
@@ -133,7 +134,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	 */
 	private String json() {
 		long date = new Date().getTime();
-		return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Não autorizado\", "
-				+ "\"message\": \"Email ou senha inválidos\", " + "\"path\": \"/login\"}";
+		return "{"
+				+ "\"timestamp\": " + date + ", " 
+				+ "\"status\": 401, "
+				+ "\"error\": \"Não autorizado\", "
+				+ "\"message\": \"Email ou senha inválidos\", "
+				+ "\"path\": \"/login\"}";
 	}
 }
