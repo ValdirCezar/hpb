@@ -2,7 +2,7 @@ package com.valdir.hp.enums;
 
 public enum Perfil {
 
-	ROLE_ADMIN(0, "Admin"), ROLE_CLIENTE(1, "Cliente"), ROLE_TECNICO(2, "Tecnico");
+	ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), TECNICO(2, "ROLE_TECNICO");
 
 	private Integer cod;
 	private String descricao;

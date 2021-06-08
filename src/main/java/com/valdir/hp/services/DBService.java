@@ -29,7 +29,8 @@ public class DBService {
 
 	public void instanciaDB() {
 		Tecnico tec1 = new Tecnico(null, "Valdir Cezar", "550.482.150-95", "valdir@mail.com", encoder.encode("123"));
-		tec1.addPerfil(Perfil.ROLE_ADMIN);
+		tec1.addPerfil(Perfil.ADMIN);
+		Tecnico tec2 = new Tecnico(null, "João Pedro", "903.347.070-56", "joao@mail.com", encoder.encode("123"));
 		
 		Cliente cli1 = new Cliente(null, "Linus Torvalds", "778.556.170-27", "linux@mail.com", encoder.encode("123"));
 		
@@ -38,7 +39,7 @@ public class DBService {
 		tec1.getChamados().addAll(Arrays.asList(c1));
 		cli1.getChamados().addAll(Arrays.asList(c1));
 
-		pessoaRepository.saveAll(Arrays.asList(tec1, cli1));
+		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, cli1));
 		chamadoRepository.saveAll(Arrays.asList(c1));
 	}
 }
