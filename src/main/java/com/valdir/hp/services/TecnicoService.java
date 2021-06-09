@@ -85,7 +85,7 @@ public class TecnicoService {
 
 		if (obj.getChamados().size() > 0) {
 			throw new DataIntegrityViolationException(
-					"Técnico " + obj.getNome() + " possui chamados associados e não pode ser deletado! Id: " + id);
+					"Técnico " + obj.getNome() + " possui chamados associados e não pode ser deletado");
 		} else {
 			repository.deleteById(id);
 		}

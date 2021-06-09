@@ -80,7 +80,7 @@ public class ClienteService {
 
 		if (obj.getChamados().size() > 0) {
 			throw new DataIntegrityViolationException(
-					"Técnico " + obj.getNome() + " possui chamados associados e não pode ser deletado! Id: " + id);
+					"Cliente " + obj.getNome() + " possui chamados associados e não pode ser deletado");
 		} else {
 			repository.deleteById(id);
 		}
